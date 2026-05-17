@@ -275,9 +275,9 @@ function goTo(idx){
 }
 
 function showProposal(){
-  clearTimeout(autoTimer);
   progBar.style.transition='opacity .6s'; progBar.style.opacity='0';
   dotsEl.style.transition='opacity .6s'; dotsEl.style.opacity='0';
+  hint.style.opacity='0';
   track.style.transition='opacity .8s'; track.style.opacity='0';
   setTimeout(()=>{track.style.display='none';proposal.classList.add('show');},800);
 }
@@ -319,6 +319,7 @@ let tx=0, ty=0, dragging=false, dragX=0;
 
 function onTouchStart(e){
   if(proposal.classList.contains('show')) return;
+  if(e.target.closest('button,#replayBtn,#nextBtn')) return;
   tx=e.touches[0].clientX; ty=e.touches[0].clientY;
   dragging=true; dragX=0;
   track.style.transition='none';
@@ -346,7 +347,7 @@ document.addEventListener('touchend',onTouchEnd,{passive:true});
 
 // Mouse drag (desktop)
 let md=false,mx=0;
-document.addEventListener('mousedown',e=>{if(proposal.classList.contains('show'))return;md=true;mx=e.clientX;track.style.transition='none';});
+document.addEventListener('mousedown',e=>{if(proposal.classList.contains('show'))return;if(e.target.closest('button,#replayBtn,#nextBtn'))return;md=true;mx=e.clientX;track.style.transition='none';});
 document.addEventListener('mousemove',e=>{if(!md)return;track.style.transform=`translateX(calc(-${current*100}vw + ${e.clientX-mx}px))`;});
 document.addEventListener('mouseup',e=>{
   if(!md)return;md=false;
