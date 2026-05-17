@@ -13,9 +13,9 @@ function handleAnswer(answer) {
   document.querySelectorAll(".proposal-buttons button").forEach(function(b) { b.disabled = true; });
 
   var timestamp = new Date().toLocaleString("ms-MY", { timeZone: "Asia/Kuala_Lumpur" });
-  var labels = { accept: "ACCEPT - Dia kata YES!", time: "TAKE TIME - Dia minta masa", reject: "REJECT - Dia kata tidak" };
+  var labels = { accept: "I already answer the question 💕", time: "I already answer the question 🌙", reject: "I already answer the question 🤍" };
 
-  var msg = encodeURIComponent("Jawapan Proposal Fearaa\n\nJawapan: " + labels[answer] + "\nMasa: " + timestamp + "\n\n- Dari proposal page");
+  var msg = encodeURIComponent(labels[answer]);
   window.open("https://wa.me/" + WA_NUMBER + "?text=" + msg, "_blank");
 
   var overlayMap = { accept: "acceptOverlay", time: "timeOverlay", reject: "rejectOverlay" };
