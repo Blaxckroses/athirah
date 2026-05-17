@@ -34,7 +34,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:#fff8f9;font-family:
 .slide:nth-child(10){background:linear-gradient(160deg,#fce0ed,#fbc3d5);}
 
 /* SWIPE HINT */
-#swipe-hint{position:fixed;bottom:42px;left:0;right:0;text-align:center;font-size:.7rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:rgba(232,99,122,.55);z-index:50;pointer-events:none;transition:opacity .6s;}
+#swipe-hint{display:none;}
 #swipe-hint span{display:inline-block;animation:nudge 1.6s ease-in-out infinite;}
 @keyframes nudge{0%,100%{transform:translateX(0);}50%{transform:translateX(6px);}}
 
@@ -397,16 +397,21 @@ goTo(0);
 </script>
 <!-- =============== MUSIC =============== -->
 <audio loop id="bg-music">
-  <source src="img/drunktext.mpeg" type="audio/mpeg">
+  <source src="img/sayang.mp3" type="audio/mpeg">
 </audio>
 <div class="music">
-  <button id="music-btn">
+  <!-- State 1: Click Me -->
+  <button id="music-clickme">✨ Click Me</button>
+  <!-- State 2: Swipe hint (hidden until clicked) -->
+  <div id="music-swipe" style="display:none;">swipe &nbsp;<span>→</span></div>
+  <!-- State 3: Music player bar (hidden until swiped) -->
+  <button id="music-btn" style="display:none;">
     <div class="music-player" id="music-bars">
       <span></span>
       <span></span>
       <span></span>
     </div>
-    <span class="music-title">Drunk Text 🎵</span>
+    <span class="music-title">Sayang 🎵</span>
   </button>
 </div>
 <style>
@@ -416,8 +421,45 @@ goTo(0);
     left: 50%;
     transform: translateX(-50%);
     z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .music button {
+  #music-clickme {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #e8637a;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 24px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.06em;
+    box-shadow: 0 4px 18px rgba(232,99,122,0.35);
+    animation: musicPulse 1.8s ease-in-out infinite;
+  }
+  #music-clickme:active { transform: scale(0.95); }
+  @keyframes musicPulse {
+    0%, 100% { box-shadow: 0 4px 18px rgba(232,99,122,0.35); }
+    50%       { box-shadow: 0 4px 28px rgba(232,99,122,0.65); }
+  }
+  #music-swipe {
+    font-size: .7rem;
+    font-weight: 400;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: rgba(232,99,122,.75);
+    font-family: 'DM Sans', sans-serif;
+  }
+  #music-swipe span {
+    display: inline-block;
+    animation: nudge 1.6s ease-in-out infinite;
+  }
+  #music-btn {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -435,7 +477,7 @@ goTo(0);
     box-shadow: 0 2px 12px rgba(232,99,122,0.12);
     transition: background .2s;
   }
-  .music button:hover { background: rgba(255,255,255,0.8); }
+  #music-btn:hover { background: rgba(255,255,255,0.8); }
   .music-player {
     display: flex;
     align-items: flex-end;
@@ -461,40 +503,53 @@ goTo(0);
 </style>
 <script>
   (function(){
-    var audio  = document.getElementById('bg-music');
-    var btn    = document.getElementById('music-btn');
-    var bars   = document.getElementById('music-bars');
-    var title  = btn.querySelector('.music-title');
+    var audio   = document.getElementById('bg-music');
+    var clickme = document.getElementById('music-clickme');
+    var swipe   = document.getElementById('music-swipe');
+    var btn     = document.getElementById('music-btn');
+    var bars    = document.getElementById('music-bars');
+    var title   = btn.querySelector('.music-title');
     var playing = false;
+    var state   = 'clickme'; // clickme → swipe → player
 
-    function setPlaying(state){
-      playing = state;
-      if(state){
-        bars.classList.remove('paused');
-        title.textContent = 'Drunk Text 🎵';
-      } else {
-        bars.classList.add('paused');
-        title.textContent = 'drunk Text ▐▐';
-      }
+    function setPlaying(val){
+      playing = val;
+      if(val){ bars.classList.remove('paused'); title.textContent='Sayang 🎵'; }
+      else   { bars.classList.add('paused');    title.textContent='Sayang ▐▐'; }
     }
 
-    function startMusic(){
+    // STATE 1: Click Me tapped
+    clickme.addEventListener('click', function(e){
+      e.stopPropagation();
       audio.play().then(function(){ setPlaying(true); }).catch(function(){});
-    }
+      clickme.style.display = 'none';
+      swipe.style.display   = 'block';
+      state = 'swipe';
+    });
 
+    // STATE 2 → 3: Detect first swipe (slide change), then show player
+    // Hook into goTo — wait until current > 0
+    var _origGoTo = window.goTo;
+    function onFirstSwipe(){
+      if(state !== 'swipe') return;
+      swipe.style.display = 'none';
+      btn.style.display   = 'flex';
+      state = 'player';
+    }
+    // Poll for first slide change
+    var checkSlide = setInterval(function(){
+      if(typeof current !== 'undefined' && current > 0){
+        onFirstSwipe();
+        clearInterval(checkSlide);
+      }
+    }, 100);
+
+    // STATE 3: Toggle play/pause
     btn.addEventListener('click', function(e){
       e.stopPropagation();
       if(playing){ audio.pause(); setPlaying(false); }
-      else { startMusic(); }
+      else { audio.play().then(function(){ setPlaying(true); }).catch(function(){}); }
     });
-
-    // Cuba autoplay
-    startMusic();
-
-    // Fallback — mula bila user mula interaksi
-    function onFirst(){ if(!playing) startMusic(); }
-    document.addEventListener('click', onFirst, {once:true});
-    document.addEventListener('touchstart', onFirst, {once:true});
   })();
 </script>
 </body>
