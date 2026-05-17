@@ -4,7 +4,7 @@
 // ============================================================
 
 // ---- CONFIG — UPDATE THESE ----
-const GITHUB_TOKEN  = "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";   // Fine-grained token, Gists scope
+const GITHUB_TOKEN  = "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";   // Fine-grained token, Gists scope
 const GIST_ID       = "3a91fd6e45bfd75c7ea3aa6886654ede";         // Create a gist first, paste ID here
 const WA_NUMBER     = "60176407713";                        // WhatsApp number (no +)
 // --------------------------------
