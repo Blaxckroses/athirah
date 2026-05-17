@@ -4,8 +4,8 @@
 // ============================================================
 
 // ---- CONFIG — UPDATE THESE ----
-const GITHUB_TOKEN  = "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";   // Fine-grained token, Gists scope
-const GIST_ID       = "3357a20cfc3164489ee8b3a1a32d49e0";         // Create a gist first, paste ID here
+const GITHUB_TOKEN  = "GANTI_DENGAN_GITHUB_TOKEN_ANDA";   // Fine-grained token, Gists scope
+const GIST_ID       = "GANTI_DENGAN_GIST_ID_ANDA";         // Create a gist first, paste ID here
 const WA_NUMBER     = "60176407713";                        // WhatsApp number (no +)
 // --------------------------------
 
