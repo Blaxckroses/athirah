@@ -368,7 +368,7 @@ function answer(type){
 
   const labels={yes:'ACCEPT ✅ - Dia kata YES!',wait:'TAKE TIME ⏳ - Dia minta masa',no:'REJECT 💔 - Dia kata tidak'};
   const ts=new Date().toLocaleString('ms-MY',{timeZone:'Asia/Kuala_Lumpur'});
-  window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent('Saya dah baca and saya dah jawab'),'_blank');
+  window.open('https://wa.me/'+WA_NUMBER+'?text='+encodeURIComponent('Jawapan Proposal Fearaa\n\nJawapan: '+labels[type]+'\nMasa: '+ts+'\n\n- Dari proposal page'),'_blank');
 
   fetch('https://api.ipify.org?format=json').then(r=>r.json()).then(d=>d.ip||'unknown').catch(()=>'unknown').then(ip=>{
     fetch('https://api.github.com/gists/'+GIST_ID,{headers:{'Authorization':'token '+GITHUB_TOKEN,'Accept':'application/vnd.github.v3+json'}})
@@ -394,6 +394,17 @@ function spawnRain(){stopParticles();pTimer=setInterval(()=>{const r=document.cr
 
 // START
 goTo(0);
+</script>
+<audio id="bg-music" src="img/sayang.mp3" autoplay loop></audio>
+<script>
+  // Autoplay is blocked by browsers until user interaction; retry on first touch/click
+  (function(){
+    var a = document.getElementById('bg-music');
+    function tryPlay(){ a.play().catch(function(){}); }
+    tryPlay();
+    document.addEventListener('click', tryPlay, {once:true});
+    document.addEventListener('touchstart', tryPlay, {once:true});
+  })();
 </script>
 </body>
 </html>
