@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Surat Untuk Fearaa :)</title>
+    <link rel="shortcut icon" type="image/png" href="./img/heart.svg" />
+    <link rel="stylesheet" href="style/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="one">
+        <h1 class="one">
+          Hey
+          <span id="name">Fira</span>
+        </h1>
+        <p class="two" id="greetingText">Nama yang indah seperti tuannya</p>
+      </div>
+      <div class="three">
+        <p>Tahu tak apa yang saya nak type kat msg hari-hari? :D</p>
+      </div>
+      <div class="four">
+        <div class="text-box">
+          <p class="hbd-chatbox">
+            HI FIRA,NAK CAKAP SIKIT SEBENARNYA SAYA NI DAH MULA .....
+          </p>
+          <p class="fake-btn">Send</p>
+        </div>
+      </div>
+      <div class="five">
+        <p class="idea-1">Then bila nak sendkan ayat tu saya akan delete</p>
+        <p class="idea-2">Sebab saya takut kita dah awkward dan awak tak okay</p>
+        <p class="idea-3">
+          Tapi Itu Bukan Point Sebenar<strong>Fearaa</strong>.
+        </p>
+        <p class="idea-4">Teng teng teng</p>
+        <p class="idea-5">
+          Point yang Saya nak cakap adalah
+          <span>:)</span>
+        </p>
+        <p class="idea-6">
+          <span>S</span>
+          <span>O</span>
+        </p>
+      </div>
+      <div class="six">
+        <img src="img/Screenshot_20241030_070106.jpg" alt="" class="girl-dp" id="imagePath" />
+        <div class="wish">
+          <h3 class="wish-hbd">Will You Be Mine</h3>
+          <h5 id="wishText">Im promise to take care of you, make you happy and being the best person that you ever met, and also meet your parents to discuss about our relationship. What i really Want Right Now Is Only You But Wait...</h5>
+        </div>
+      </div>
+      <div class="seven">
+        <div class="baloons">
+          <img src="img/balloon.svg" alt="" />
+          <img src="img/smiling.svg" />
+          <img src="img/heart.svg" />
+          <img src="img/balloon.svg" alt="" />
+          <img src="img/heart.svg" />
+          <img src="img/balloon.svg" alt="" />
+          <img src="img/music-note.svg" alt="" />
+          <img src="img/heart.svg" />
+          <img src="img/balloon.svg" alt="" />
+          <img src="img/heart.svg" />
+          <img src="img/heart.svg" />
+          <img src="img/music-note.svg" alt="" />
+          <img src="img/smiling.svg" />
+          <img src="img/happy.svg" alt="" />
+          <img src="img/balloon.svg" alt="" />
+          <img src="img/heart.svg" />
+          <img src="img/smiling.svg" />
+        </div>
+      </div>
+      <div class="eight">
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" /></svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" /></svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" /></svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" /></svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" /></svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" /></svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" /></svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" /></svg>
+        <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><circle cx="20" cy="20" r="20" /></svg>
+      </div>
+      <div class="nine">
+        <p>Itu jelah hajat saya. Jadi saya tak marah kalau saya direject or what, itu lumrah</p>
+        <p id="replay" style="cursor:pointer;">Tekan sini untuk tengok balik dari awal 🔁</p>
+        <p class="last-smile">:)</p>
+      </div>
+
+      <!-- ===================== PROPOSAL SECTION ===================== -->
+      <div class="ten proposal-section" id="proposalSection">
+        <div class="proposal-inner">
+          <div class="ring-emoji">💍</div>
+          <h2 class="proposal-title">Will You Marry Me?</h2>
+          <p class="proposal-sub">Fearaa... saya serius. Ini bukan main-main.</p>
+          <div class="proposal-buttons" id="proposalButtons">
+            <button class="btn-accept" id="btnAccept" onclick="handleAnswer('accept')">
+              <span class="btn-icon">💍</span> Accept
+            </button>
+            <button class="btn-time" id="btnTime" onclick="handleAnswer('time')">
+              <span class="btn-icon">⏳</span> Take Time
+            </button>
+            <button class="btn-reject" id="btnReject" onclick="handleAnswer('reject')">
+              <span class="btn-icon">💔</span> Reject
+            </button>
+          </div>
+          <div class="proposal-result" id="proposalResult"></div>
+        </div>
+      </div>
+      <!-- =================== END PROPOSAL SECTION =================== -->
+
+    </div>
+
+    <!-- ACCEPT Animation Overlay -->
+    <div class="answer-overlay" id="acceptOverlay">
+      <div class="overlay-content accept-content">
+        <div class="fireworks" id="fireworksContainer"></div>
+        <div class="overlay-emoji big-bounce">💍💕✨</div>
+        <h1 class="overlay-title accept-title">Ya Allah... SHE SAID YES! 🥹</h1>
+        <p class="overlay-msg">Alhamdulillah. Saya janji akan jaga awak sepenuh hati. Kita akan bina hidup yang indah bersama. I love you, Fearaa. 💕</p>
+        <div class="hearts-rain" id="heartsRain"></div>
+        <button class="close-overlay" onclick="closeOverlay('acceptOverlay')">Tutup 💕</button>
+      </div>
+    </div>
+
+    <!-- TAKE TIME Animation Overlay -->
+    <div class="answer-overlay" id="timeOverlay">
+      <div class="overlay-content time-content">
+        <div class="overlay-emoji hourglass-spin">⏳</div>
+        <h1 class="overlay-title time-title">Okay... Saya Tunggu 🌙</h1>
+        <p class="overlay-msg">Takpe Fearaa. Saya faham. Ambil masa awak. Saya akan sentiasa ada di sini menunggu awak. Bila awak dah bersedia, saya masih di sini. 🤍</p>
+        <div class="stars-float" id="starsFloat"></div>
+        <button class="close-overlay" onclick="closeOverlay('timeOverlay')">Okay 🌙</button>
+      </div>
+    </div>
+
+    <!-- REJECT Animation Overlay -->
+    <div class="answer-overlay" id="rejectOverlay">
+      <div class="overlay-content reject-content">
+        <div class="overlay-emoji heartbreak-shake">💔</div>
+        <h1 class="overlay-title reject-title">Okay... Takpe 😔</h1>
+        <p class="overlay-msg">Takpe Fearaa. Saya faham. Terima kasih sebab sudi baca semua ni. Walaupun sakit, saya doakan awak bahagia selalu. Take care. 🤍</p>
+        <div class="rain-drops" id="rainDrops"></div>
+        <button class="close-overlay" onclick="closeOverlay('rejectOverlay')">Okay 🤍</button>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script type="text/babel" src="script/main.js"></script>
+    <script src="script/proposal.js"></script>
+  </body>
+</html>
