@@ -395,15 +395,106 @@ function spawnRain(){stopParticles();pTimer=setInterval(()=>{const r=document.cr
 // START
 goTo(0);
 </script>
-<audio id="bg-music" src="img/sayang.mp3" autoplay loop></audio>
+<!-- =============== MUSIC =============== -->
+<audio loop id="bg-music">
+  <source src="img/sayang.mp3" type="audio/mpeg">
+</audio>
+<div class="music">
+  <button id="music-btn">
+    <div class="music-player" id="music-bars">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <span class="music-title">Sayang 🎵</span>
+  </button>
+</div>
+<style>
+  .music {
+    position: fixed;
+    bottom: 52px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+  }
+  .music button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(232,99,122,0.25);
+    border-radius: 999px;
+    padding: 8px 16px 8px 12px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #e8637a;
+    letter-spacing: 0.04em;
+    box-shadow: 0 2px 12px rgba(232,99,122,0.12);
+    transition: background .2s;
+  }
+  .music button:hover { background: rgba(255,255,255,0.8); }
+  .music-player {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 14px;
+  }
+  .music-player span {
+    display: block;
+    width: 3px;
+    border-radius: 2px;
+    background: #e8637a;
+    animation: musicBar 0.8s ease-in-out infinite alternate;
+  }
+  .music-player span:nth-child(1) { height: 6px;  animation-delay: 0s; }
+  .music-player span:nth-child(2) { height: 12px; animation-delay: 0.2s; }
+  .music-player span:nth-child(3) { height: 8px;  animation-delay: 0.4s; }
+  .music-player.paused span { animation-play-state: paused; }
+  @keyframes musicBar {
+    from { height: 4px; }
+    to   { height: 14px; }
+  }
+  .music-title { white-space: nowrap; }
+</style>
 <script>
-  // Autoplay is blocked by browsers until user interaction; retry on first touch/click
   (function(){
-    var a = document.getElementById('bg-music');
-    function tryPlay(){ a.play().catch(function(){}); }
-    tryPlay();
-    document.addEventListener('click', tryPlay, {once:true});
-    document.addEventListener('touchstart', tryPlay, {once:true});
+    var audio  = document.getElementById('bg-music');
+    var btn    = document.getElementById('music-btn');
+    var bars   = document.getElementById('music-bars');
+    var title  = btn.querySelector('.music-title');
+    var playing = false;
+
+    function setPlaying(state){
+      playing = state;
+      if(state){
+        bars.classList.remove('paused');
+        title.textContent = 'Sayang 🎵';
+      } else {
+        bars.classList.add('paused');
+        title.textContent = 'Sayang ▐▐';
+      }
+    }
+
+    function startMusic(){
+      audio.play().then(function(){ setPlaying(true); }).catch(function(){});
+    }
+
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      if(playing){ audio.pause(); setPlaying(false); }
+      else { startMusic(); }
+    });
+
+    // Cuba autoplay
+    startMusic();
+
+    // Fallback — mula bila user mula interaksi
+    function onFirst(){ if(!playing) startMusic(); }
+    document.addEventListener('click', onFirst, {once:true});
+    document.addEventListener('touchstart', onFirst, {once:true});
   })();
 </script>
 </body>
