@@ -16,7 +16,7 @@ html,body{height:100%;width:100%;overflow:hidden;background:#fff8f9;font-family:
 .prog-seg{flex:1;height:3px;border-radius:2px;background:rgba(232,99,122,.2);overflow:hidden;}
 .prog-fill{height:100%;width:0%;background:var(--pink);border-radius:2px;}
 .prog-seg.done .prog-fill{width:100%;}
-.prog-seg.active .prog-fill{animation:fillBar linear forwards;}
+.prog-seg.active .prog-fill{width:100%;background:var(--pink);}
 @keyframes fillBar{from{width:0%}to{width:100%}}
 
 /* TRACK */
@@ -223,11 +223,9 @@ const WA_NUMBER    = "60176407713";
 
 const CHAT_MSG = "I could easily say that I miss you, I love you, and I feel happy with every conversation with you — and that you've become someone unexpectedly important to me.";
 
-const DURATIONS = [4500,4000,7500,6500,6000,6000,5500,2800,8000,9500];
-const TOTAL = DURATIONS.length;
+const TOTAL = 10;
 
 let current = 0;
-let autoTimer = null;
 let transitioning = false;
 let hintGone = false;
 
@@ -254,21 +252,17 @@ const dotEls=dotsEl.querySelectorAll('.dot');
 function updateUI(idx){
   dotEls.forEach((d,i)=>d.classList.toggle('on',i===idx));
   segs.forEach((s,i)=>{
-    const f=s.querySelector('.prog-fill');
     s.classList.remove('done','active');
-    f.style.animationDuration=''; f.style.width='';
-    if(i<idx){s.classList.add('done');}
+    if(i<idx) s.classList.add('done');
+    else if(i===idx) s.classList.add('active');
   });
-  if(idx<TOTAL){
-    segs[idx].classList.add('active');
-    segs[idx].querySelector('.prog-fill').style.animationDuration=DURATIONS[idx]+'ms';
-  }
 }
 
 function goTo(idx){
-  if(idx<0||idx>=TOTAL||transitioning) return;
+  if(idx<0||transitioning) return;
+  // On last slide swiping forward → show proposal
+  if(idx>=TOTAL){showProposal();return;}
   transitioning=true;
-  clearTimeout(autoTimer);
   current=idx;
   track.style.transform=`translateX(-${idx*100}vw)`;
   updateUI(idx);
@@ -276,10 +270,6 @@ function goTo(idx){
   if(idx===7) launchBalloons();
   if(idx>0 && !hintGone){hintGone=true;hint.style.opacity='0';}
   setTimeout(()=>{transitioning=false;},380);
-  autoTimer=setTimeout(()=>{
-    if(current>=TOTAL-1) showProposal();
-    else goTo(current+1);
-  }, DURATIONS[idx]);
 }
 
 function showProposal(){
@@ -320,8 +310,6 @@ document.getElementById('replayBtn').addEventListener('click',e=>{
   track.style.transition='none'; track.style.opacity='1';
   current=0; track.style.transform='translateX(0)';
   updateUI(0);
-  clearTimeout(autoTimer);
-  autoTimer=setTimeout(()=>goTo(1), DURATIONS[0]);
 });
 
 // ── SWIPE ──
@@ -345,8 +333,8 @@ function onTouchEnd(){
   if(!dragging) return; dragging=false;
   track.style.transition='transform .36s cubic-bezier(.42,0,.22,1)';
   const thresh=window.innerWidth*0.2;
-  if(dragX<-thresh && current<TOTAL-1){goTo(current+1);}
-  else if(dragX>thresh && current>0){clearTimeout(autoTimer);goTo(current-1);}
+  if(dragX<-thresh){goTo(current+1);}
+  else if(dragX>thresh && current>0){goTo(current-1);}
   else{track.style.transform=`translateX(-${current*100}vw)`;}
 }
 
@@ -362,8 +350,8 @@ document.addEventListener('mouseup',e=>{
   if(!md)return;md=false;
   track.style.transition='transform .36s cubic-bezier(.42,0,.22,1)';
   const dx=e.clientX-mx,th=window.innerWidth*0.2;
-  if(dx<-th&&current<TOTAL-1)goTo(current+1);
-  else if(dx>th&&current>0){clearTimeout(autoTimer);goTo(current-1);}
+  if(dx<-th)goTo(current+1);
+  else if(dx>th&&current>0)goTo(current-1);
   else track.style.transform=`translateX(-${current*100}vw)`;
 });
 
